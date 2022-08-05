@@ -2,7 +2,7 @@
 // It will be used by the Solidity compiler to validate its version.
 pragma solidity ^0.8.0;
 
-struct WormholeGUID {
+struct TeleportGUID {
   bytes32 sourceDomain;
   bytes32 targetDomain;
   bytes32 receiver;
@@ -12,8 +12,8 @@ struct WormholeGUID {
   uint48 timestamp;
 }
 
-contract Wormhole {
-  event WormholeInitialized(WormholeGUID wormhole);
+contract TeleportEventSim {
+  event TeleportInitialized(TeleportGUID wormhole);
 
   uint80 nonce;
 
@@ -21,7 +21,7 @@ contract Wormhole {
     nonce++;
     uint256 seed = block.timestamp + nonce;
 
-    WormholeGUID memory wormhole = WormholeGUID({
+    TeleportGUID memory wormhole = TeleportGUID({
       sourceDomain: keccak256(abi.encodePacked(seed+1)),
       targetDomain: keccak256(abi.encodePacked(seed+2)),
       receiver: bytes32(bytes20(keccak256(abi.encodePacked(seed+3)))),
@@ -31,7 +31,7 @@ contract Wormhole {
       timestamp: uint48(block.timestamp)
     });
 
-    emit WormholeInitialized(wormhole);
+    emit TeleportInitialized(wormhole);
   }
 
   function emitRandomEvents(int n) external {
@@ -39,7 +39,7 @@ contract Wormhole {
       nonce++;
       uint256 seed = block.timestamp + nonce;
 
-      WormholeGUID memory wormhole = WormholeGUID({
+      TeleportGUID memory wormhole = TeleportGUID({
       sourceDomain: keccak256(abi.encodePacked(seed+1)),
       targetDomain: keccak256(abi.encodePacked(seed+2)),
       receiver: bytes32(bytes20(keccak256(abi.encodePacked(seed+3)))),
@@ -49,7 +49,7 @@ contract Wormhole {
       timestamp: uint48(block.timestamp)
       });
 
-      emit WormholeInitialized(wormhole);
+      emit TeleportInitialized(wormhole);
     }
   }
 }
